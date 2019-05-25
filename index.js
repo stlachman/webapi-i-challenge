@@ -19,4 +19,22 @@ server.get("/api/users", (req, res) => {
     });
 });
 
+server.post("/api/users", (req, res) => {
+  const user = req.body;
+  if (!user.name || !user.bio) {
+    res.status(400).json({
+      errorMessage: "Please provide name and bio for the user."
+    });
+  }
+  db.insert(user)
+    .then(userInfo => {
+      res.status(201).json(userInfo);
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: "There was an error while saving the user to the database"
+      });
+    });
+});
+
 server.listen(5000, () => console.log("API running on port 5000"));
