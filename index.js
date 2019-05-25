@@ -44,6 +44,7 @@ server.get("/api/users/:id", (req, res) => {
     });
 });
 
+// Create a new user
 server.post("/api/users", (req, res) => {
   const user = req.body;
   if (!user.name || !user.bio) {
@@ -59,6 +60,24 @@ server.post("/api/users", (req, res) => {
       res.status(500).json({
         error: "There was an error while saving the user to the database"
       });
+    });
+});
+
+// Delete a user
+server.delete("/api/users/:id", (req, res) => {
+  const userId = req.params.id;
+  db.remove(userId)
+    .then(user => {
+      if (user) {
+        res.status(204).end();
+      } else {
+        res
+          .status(404)
+          .json({ message: "The user with the specified ID does not exist." });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ error: "The user could not be removed" });
     });
 });
 
