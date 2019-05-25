@@ -1,12 +1,34 @@
 const express = require("express");
+const cors = require("cors");
 const db = require("./data/db");
 
 const server = express();
 
 server.use(express.json());
+server.use(cors());
 
 server.get("/", (req, res) => {
   res.send("It's alive!");
+});
+
+// Create a new user
+server.post("/api/users", (req, res) => {
+  const user = req.body;
+  if (!user.name || !user.bio) {
+    res.status(400).json({
+      errorMessage: "Please provide name and bio for the user."
+    });
+    return;
+  }
+  db.insert(user)
+    .then(userInfo => {
+      res.status(201).json(userInfo);
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: "There was an error while saving the user to the database"
+      });
+    });
 });
 
 // Get All Users
@@ -41,26 +63,6 @@ server.get("/api/users/:id", (req, res) => {
       res
         .status(500)
         .json({ error: "The user information could not be retrieved." });
-    });
-});
-
-// Create a new user
-server.post("/api/users", (req, res) => {
-  const user = req.body;
-  if (!user.name || !user.bio) {
-    res.status(400).json({
-      errorMessage: "Please provide name and bio for the user."
-    });
-    return;
-  }
-  db.insert(user)
-    .then(userInfo => {
-      res.status(201).json(userInfo);
-    })
-    .catch(err => {
-      res.status(500).json({
-        error: "There was an error while saving the user to the database"
-      });
     });
 });
 
