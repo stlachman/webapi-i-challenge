@@ -51,6 +51,7 @@ server.post("/api/users", (req, res) => {
     res.status(400).json({
       errorMessage: "Please provide name and bio for the user."
     });
+    return;
   }
   db.insert(user)
     .then(userInfo => {
@@ -78,6 +79,34 @@ server.delete("/api/users/:id", (req, res) => {
     })
     .catch(err => {
       res.status(500).json({ error: "The user could not be removed" });
+    });
+});
+
+// Edit a user
+
+server.put("/api/users/:id", (req, res) => {
+  const userId = req.params.id;
+  const user = req.body;
+  if (!user.name || !user.bio) {
+    res.status(400).json({
+      errorMessage: "Please provide name and bio for the user."
+    });
+    return;
+  }
+  db.update(userId, user)
+    .then(changes => {
+      if (changes) {
+        res.status(200).json({ changes });
+      } else {
+        res.status(404).json({
+          message: "The user with the specified ID does not exist."
+        });
+      }
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: "The user information could not be modified." });
     });
 });
 
