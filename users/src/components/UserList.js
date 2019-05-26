@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { fetchUsers, deleteUser } from "../actions";
 
 class UserList extends React.Component {
@@ -50,7 +51,9 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { fetchUsers, deleteUser }
-)(UserList);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { fetchUsers, deleteUser }
+  )(UserList)
+);

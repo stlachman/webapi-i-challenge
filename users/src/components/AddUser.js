@@ -1,4 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+
+import { addUser } from "../actions";
 
 class AddUser extends React.Component {
   constructor() {
@@ -18,6 +22,9 @@ class AddUser extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    this.props.addUser(this.state).then(() => {
+      this.props.history.push("/");
+    });
   };
 
   render() {
@@ -48,4 +55,16 @@ class AddUser extends React.Component {
   }
 }
 
-export default AddUser;
+const mapStateToProps = state => {
+  return {
+    addingUser: state.addingUser,
+    error: state.error
+  };
+};
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { addUser }
+  )(AddUser)
+);

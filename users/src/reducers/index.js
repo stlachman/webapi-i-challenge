@@ -61,6 +61,17 @@ const reducer = (state = initialState, action) => {
         addingUser: true,
         error: ""
       };
+    case ADD_USER_SUCCESS:
+      return {
+        ...state,
+        addingUser: false
+      };
+    case ADD_USER_FAIL:
+      return {
+        ...state,
+        addingUser: false,
+        error: action.payload
+      };
     default:
       return state;
   }

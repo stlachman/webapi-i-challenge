@@ -44,6 +44,6 @@ export const addUser = user => dispatch => {
 
   return axios
     .post(`http://localhost:5000/api/users/`, user)
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+    .then(res => ({ type: ADD_USER_SUCCESS }))
+    .catch(err => ({ type: ADD_USER_FAIL, payload: err }));
 };
