@@ -7,12 +7,17 @@ import {
   DELETE_USER_FAIL,
   ADD_USER_START,
   ADD_USER_SUCCESS,
-  ADD_USER_FAIL
+  ADD_USER_FAIL,
+  FETCH_USER_START,
+  FETCH_USER_SUCCESS,
+  FETCH_USER_FAIL
 } from "../actions";
 
 const initialState = {
   users: [],
+  user: "",
   fetchingUsers: false,
+  fetchingUser: false,
   deletingUser: false,
   addingUser: false,
   error: ""
@@ -70,6 +75,24 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         addingUser: false,
+        error: action.payload
+      };
+    case FETCH_USER_START:
+      return {
+        ...state,
+        fetchingUser: true,
+        error: ""
+      };
+    case FETCH_USER_SUCCESS:
+      return {
+        ...state,
+        fetchingUser: false,
+        user: action.payload
+      };
+    case FETCH_USER_FAIL:
+      return {
+        ...state,
+        fetchingUser: false,
         error: action.payload
       };
     default:
