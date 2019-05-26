@@ -27,10 +27,12 @@ class UserList extends React.Component {
     }
     return (
       <div>
+        <h1>Cool User app</h1>
         {this.props.users.map(user => (
           <div key={user.id}>
             <h3>Name: {user.name}</h3>
             <p>Bio: {user.bio}</p>
+
             <button onClick={() => this.delete(user.id)}>Delete User</button>
           </div>
         ))}

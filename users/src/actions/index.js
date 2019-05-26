@@ -34,3 +34,16 @@ export const deleteUser = id => dispatch => {
       dispatch({ type: DELETE_USER_FAIL, payload: err });
     });
 };
+
+export const ADD_USER_START = "ADD_USER_START";
+export const ADD_USER_SUCCESS = "ADD_USER_SUCCESS";
+export const ADD_USER_FAIL = "ADD_USER_FAIL";
+
+export const addUser = user => dispatch => {
+  dispatch({ type: ADD_USER_START });
+
+  return axios
+    .post(`http://localhost:5000/api/users/`, user)
+    .then(res => console.log(res))
+    .catch(err => console.log(err));
+};
