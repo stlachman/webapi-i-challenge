@@ -35,8 +35,8 @@ server.post("/api/users", (req, res) => {
 
 server.get("/api/users", (req, res) => {
   db.find()
-    .then(hubs => {
-      res.status(200).json(hubs);
+    .then(users => {
+      res.status(200).json(users);
     })
     .catch(err => {
       res.status(500).json({

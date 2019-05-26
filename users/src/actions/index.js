@@ -16,3 +16,21 @@ export const fetchUsers = () => dispatch => {
       dispatch({ type: FETCH_USERS_FAIL, payload: err });
     });
 };
+
+export const DELETE_USER_START = "DELETE_USER_START";
+export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
+export const DELETE_USER_FAIL = "DELETE_USER_FAIL";
+
+export const deleteUser = id => dispatch => {
+  dispatch({ type: DELETE_USER_START });
+
+  return axios
+    .delete(`http://localhost:5000/api/users/${id}`)
+    .then(res => {
+      console.log(res);
+      dispatch({ type: DELETE_USER_SUCCESS });
+    })
+    .catch(err => {
+      dispatch({ type: DELETE_USER_FAIL, payload: err });
+    });
+};
