@@ -33,7 +33,7 @@ class UserList extends React.Component {
           <div key={user.id}>
             <h3>Name: {user.name}</h3>
             <p>Bio: {user.bio}</p>
-            <Link to={`/users/${user.id}`}>User Profile</Link>
+            <Link to={`/users/${user.id}`}>Edit User Profile</Link>
             <button onClick={() => this.delete(user.id)}>Delete User</button>
           </div>
         ))}
