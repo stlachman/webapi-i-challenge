@@ -33,8 +33,15 @@ class User extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.editUser(this.state.user).then(() => {
-      this.props.history.push("/");
+    this.props.editUser(this.state.user).then(res => {
+      if (res.type === "EDIT_USER_FAIL") {
+        this.setState({
+          ...this.state,
+          error: "Both fields must be filled out"
+        });
+      } else {
+        this.props.history.push("/");
+      }
     });
   };
 
@@ -49,6 +56,7 @@ class User extends React.Component {
     return (
       <div>
         <div>
+          {this.state.error && <p>{this.state.error}</p>}
           <form onSubmit={this.handleSubmit}>
             <input
               type="text"

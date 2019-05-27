@@ -3,6 +3,14 @@ import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 import { fetchUsers, deleteUser } from "../actions";
 
+import styled from "styled-components";
+
+const Container = styled.div`
+  max-width: 80vw;
+  margin: 0 auto;
+  text-align: center;
+`;
+
 class UserList extends React.Component {
   componentDidMount() {
     this.props.fetchUsers();
@@ -27,8 +35,8 @@ class UserList extends React.Component {
       );
     }
     return (
-      <div>
-        <h1>Cool User app</h1>
+      <Container>
+        <h1>Cool Users</h1>
         {this.props.users.map(user => (
           <div key={user.id}>
             <h3>Name: {user.name}</h3>
@@ -37,7 +45,7 @@ class UserList extends React.Component {
             <button onClick={() => this.delete(user.id)}>Delete User</button>
           </div>
         ))}
-      </div>
+      </Container>
     );
   }
 }
